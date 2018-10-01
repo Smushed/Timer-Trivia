@@ -20,15 +20,22 @@ var questionArray = [{
     answers: ["Orangutan", "Orca", "Elephant", "Sperm Whale"],
     correctAnswer: "Sperm Whale"
 }];
-var totalTime = 2;
+var totalTime;
 var intervalID;
 var questionNumber = 0;
 var onQuestion = true;
+var score = 0;
+var playerAnswer;
 
-
+$(".answers").on("click", function(){
+    playerAnswer = $(this).val();
+    //Changes player answer from a number string to the answer string
+    playerAnswer = questionArray[questionNumber].answers[playerAnswer];
+    playerAnswered();
+});
 
 function startTimer() {
-    totalTime = 2;
+    totalTime = 10;
     intervalID = setInterval(function(){
         totalTime--;
         //This if statement is for when the player doesn't guess in time
@@ -38,10 +45,11 @@ function startTimer() {
             onQuestion = false;
             timeIsOver();
         };
-        $("#timer").html(totalTime)
+        $("#timer").html(totalTime);
     }, 1000);
 };
 
+// This updates the page with the new question and possible answers
 function updatePage() {
     $("#question").text(questionArray[questionNumber].question);
     $("#answer1").text(questionArray[questionNumber].answers[0]);
@@ -52,11 +60,11 @@ function updatePage() {
 
 function togglePage(){
     //Toggle all the elements on the page on and off to make the page shift after each question
-    if (questionNumber < 4){
-        $("#title").toggle();
+    //If statement to check if the game is over
+    if (questionNumber < questionArray.length){
         $("#time-display").toggle();
         $("#question").toggle();
-        $("#question-list").toggle();
+        $("#answer-list").toggle();
         if (onQuestion === false){
             $("#result").show();
         } else {
@@ -68,22 +76,50 @@ function togglePage(){
         $("#title").hide();
         $("#time-display").hide();
         $("#question").hide();
-        $("#question-list").hide();
+        $("#answer-list").hide();
         finalScreen();
-        $("result").show();
+        $("#result").show();
     }
 };
 
 function finalScreen() {
-    //This is where I put the result of the game
-    //How many they got right and wrong and what the correct answers were
+    //Thanks the player for playing and displays all the correct answers
+    $("#result").html(`Thank you for playing! You scored ${score} correct. <p>The correct answers were:</p>`)
+    for (var i = 0; i < questionArray.length; i++){
+        $("#result").append(`<p>${questionArray[i].question}: ${questionArray[i].correctAnswer}</p>`)
+    };
 };
 
 function timeIsOver() {
-    totalTime = 2;
-    togglePage();
     $("#result").text(`Time has run out! The correct answer was ${questionArray[questionNumber].correctAnswer}`);
-    $(`<div>The next question will start in <span id="nextQuestionTimer">${totalTime}</span> seconds</div>`).appendTo("#result");
+    afterQuestion();
+};
+
+function playerCorrect() {
+    //If the player is correct, the score goes up by one and the result screen displays
+    $("#result").text(`Correct! The answer was ${questionArray[questionNumber].correctAnswer}`);
+    score++;
+    onQuestion = false;
+    afterQuestion();
+}
+
+function playerIncorrect(){
+    //If the player is incorrect, the result screen
+    $("#result").text(`Incorrect. The answer was ${questionArray[questionNumber].correctAnswer}`);
+    onQuestion = false;
+    afterQuestion();
+}
+
+function afterQuestion(){
+    totalTime = 10;
+    togglePage();
+    //Checks if they are on the last question and updates the result div accordingly
+    if (questionNumber < (questionArray.length - 1)){
+        $(`<div>The next question will start in <span id="nextQuestionTimer">${totalTime}</span> seconds</div>`).appendTo("#result");
+    } else {
+        $(`<div>You've answered all the questions. The game is over in <span id="nextQuestionTimer">${totalTime}</span> seconds</div>`).appendTo("#result");
+    }
+    //Timer for inbetween questions
     intervalID = setInterval(function(){
         totalTime--;
         if (totalTime <= 0) {
@@ -93,9 +129,20 @@ function timeIsOver() {
             questionNumber++;
             togglePage();
         };
-        $("#nextQuestionTimer").html(totalTime)
+        $("#nextQuestionTimer").html(totalTime);
     }, 1000);
+
 }
+
+function playerAnswered() {
+    //Checks the player answer
+    clearInterval(intervalID);
+    if (playerAnswer === questionArray[questionNumber].correctAnswer){
+        playerCorrect();
+    } else {
+        playerIncorrect();
+    };
+};
 
 updatePage(questionNumber);
 startTimer();
