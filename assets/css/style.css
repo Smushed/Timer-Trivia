@@ -1,0 +1,31 @@
+body{
+    font-family: 'Nunito Sans', sans-serif;
+}
+#answer-list{
+    list-style-type: none;
+    font-size: 26px;
+}
+.answers {
+    border: 2px grey solid;
+    width: 50%;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 15px;
+}
+#result {
+    margin: auto;
+    text-align: center;
+}
+#question {
+    margin: auto;
+    text-align: center;
+}
+#time-display {
+    margin: auto;
+    text-align: center;
+}
+#title {
+    text-align: center;
+    margin: 50px;
+    font-weight: 800;
+}

@@ -7,19 +7,38 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <title>Trivia Game</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+    <title>Animal Timer Trivia</title>
 </head>
 <body>
-    <h1 id="title">Trivia</h1>
-    <h3 id="time-display">Time remaining: <span id="timer">30</span> seconds</h3>
-    <h3 id="question"></h3>
-    <ul id="answer-list">
-        <li id="answer1" class="answers" value="0"></li>
-        <li id="answer2" class="answers" value="1"></li>
-        <li id="answer3" class="answers" value="2"></li>
-        <li id="answer4" class="answers" value="3"></li>
-    </ul>
-    <h1 id="result"></h1>
+    <h1 id="title">Animal Trivia</h1>
+    <div class="container">
+        <div class="row">
+            <!-- Empty col for spacing on large screens -->
+            <div class="d-none d-md-block col-md-2"></div>
+            <div class="col-12 col-md-8">
+                <h3 id="time-display">Time remaining: <span id="timer">15</span> seconds</h3>
+                <h3 id="question"></h3>
+                <div class="row">
+                    <div class="col-12">
+                        <ul id="answer-list">
+                            <li id="answer1" class="answers" value="0"></li>
+                            <li id="answer2" class="answers" value="1"></li>
+                            <li id="answer3" class="answers" value="2"></li>
+                            <li id="answer4" class="answers" value="3"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Empty col for spacing on large screens -->
+            <div class="d-none d-md-block col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-12 center-elements">
+                <h1 id="result"></h1>
+            </div>
+        </div>
+    </div>
     <script src="assets/javascript/app.js"></script>
 </body>
 </html>

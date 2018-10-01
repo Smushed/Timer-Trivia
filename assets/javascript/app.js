@@ -9,8 +9,8 @@ var questionArray = [{
     correctAnswer: "Peregrine Falcon"
 }, {
     question: "What is the world's most poisonous spider?",
-    answers: ["Brazilian Wandering Spider aka Banana Spider", "Brown Recluse", "Sydney Funnel Spider", "Daddy-Longlegs"],
-    correctAnswer: "Brazilian Wandering Spider aka Banana Spider"
+    answers: ["Banana Spider", "Brown Recluse", "Sydney Funnel Spider", "Daddy-Longlegs"],
+    correctAnswer: "Banana Spider"
 }, {
     question: "What animal is the largest land predator?",
     answers: ["Bengal Tiger", "African Lion", "Polar Bear", "Nile Crocodile"],
@@ -35,7 +35,7 @@ $(".answers").on("click", function(){
 });
 
 function startTimer() {
-    totalTime = 10;
+    totalTime = 15;
     intervalID = setInterval(function(){
         totalTime--;
         //This if statement is for when the player doesn't guess in time
@@ -86,7 +86,7 @@ function finalScreen() {
     //Thanks the player for playing and displays all the correct answers
     $("#result").html(`Thank you for playing! You scored ${score} correct. <p>The correct answers were:</p>`)
     for (var i = 0; i < questionArray.length; i++){
-        $("#result").append(`<p>${questionArray[i].question}: ${questionArray[i].correctAnswer}</p>`)
+        $("#result").append(`<p>${questionArray[i].question} - ${questionArray[i].correctAnswer}</p>`)
     };
 };
 
@@ -97,7 +97,7 @@ function timeIsOver() {
 
 function playerCorrect() {
     //If the player is correct, the score goes up by one and the result screen displays
-    $("#result").text(`Correct! The answer was ${questionArray[questionNumber].correctAnswer}`);
+    $("#result").text(`Correct! The answer was ${questionArray[questionNumber].correctAnswer}.`);
     score++;
     onQuestion = false;
     afterQuestion();
@@ -105,7 +105,7 @@ function playerCorrect() {
 
 function playerIncorrect(){
     //If the player is incorrect, the result screen
-    $("#result").text(`Incorrect. The answer was ${questionArray[questionNumber].correctAnswer}`);
+    $("#result").text(`Incorrect. The answer was ${questionArray[questionNumber].correctAnswer}.`);
     onQuestion = false;
     afterQuestion();
 }
@@ -115,9 +115,9 @@ function afterQuestion(){
     togglePage();
     //Checks if they are on the last question and updates the result div accordingly
     if (questionNumber < (questionArray.length - 1)){
-        $(`<div>The next question will start in <span id="nextQuestionTimer">${totalTime}</span> seconds</div>`).appendTo("#result");
+        $(`<div>The next question will start in <span id="nextQuestionTimer">${totalTime}</span> seconds.</div>`).appendTo("#result");
     } else {
-        $(`<div>You've answered all the questions. The game is over in <span id="nextQuestionTimer">${totalTime}</span> seconds</div>`).appendTo("#result");
+        $(`<div>You've answered all the questions. The game is over in <span id="nextQuestionTimer">${totalTime}</span> seconds.</div>`).appendTo("#result");
     }
     //Timer for inbetween questions
     intervalID = setInterval(function(){
@@ -137,6 +137,8 @@ function afterQuestion(){
 function playerAnswered() {
     //Checks the player answer
     clearInterval(intervalID);
+    //Updates the HTML so it displays the correct timer when the next question loads
+    $("#timer").html(`15`);
     if (playerAnswer === questionArray[questionNumber].correctAnswer){
         playerCorrect();
     } else {
