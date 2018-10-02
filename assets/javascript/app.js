@@ -2,23 +2,28 @@
 var questionArray = [{
     question: "What animal has the longest lifespan?",
     answers: ["Elephant", "Blue Whale", "Giant Tortoise", "Hippopotamus"],
-    correctAnswer: "Giant Tortoise"
+    correctAnswer: "Giant Tortoise",
+    answerImage: "assets/images/tortoise.png"
 }, {
     question: "What is the fastest flying bird in the world?",
     answers: ["Golden Eagle", "Peregrine Falcon", "Black Vulture", "Mute Swan"],
-    correctAnswer: "Peregrine Falcon"
+    correctAnswer: "Peregrine Falcon",
+    answerImage: "assets/images/falcon.png"
 }, {
     question: "What is the world's most poisonous spider?",
     answers: ["Banana Spider", "Brown Recluse", "Sydney Funnel Spider", "Daddy-Longlegs"],
-    correctAnswer: "Banana Spider"
+    correctAnswer: "Banana Spider",
+    answerImage: "assets/images/spider.png"
 }, {
     question: "What animal is the largest land predator?",
     answers: ["Bengal Tiger", "African Lion", "Polar Bear", "Nile Crocodile"],
-    correctAnswer: "Polar Bear"
+    correctAnswer: "Polar Bear",
+    answerImage: "assets/images/bear.png"
 }, {
     question: "Which animal has the largest brain?",
     answers: ["Orangutan", "Orca", "Elephant", "Sperm Whale"],
-    correctAnswer: "Sperm Whale"
+    correctAnswer: "Sperm Whale",
+    answerImage: "assets/images/whale.png"
 }];
 var totalTime;
 var intervalID;
@@ -67,8 +72,10 @@ function togglePage(){
         $("#answer-list").toggle();
         if (onQuestion === false){
             $("#result").show();
+            $("#answer-image").show();
         } else {
             $("#result").hide();
+            $("#answer-image").hide();
             updatePage();
             startTimer();
         }
@@ -77,6 +84,7 @@ function togglePage(){
         $("#time-display").hide();
         $("#question").hide();
         $("#answer-list").hide();
+        $("#answer-image").hide();
         finalScreen();
         $("#result").show();
     }
@@ -95,23 +103,28 @@ function timeIsOver() {
     afterQuestion();
 };
 
+function updateImage() {
+    $("#answer-image").attr("src", questionArray[questionNumber].answerImage)
+}
+
 function playerCorrect() {
     //If the player is correct, the score goes up by one and the result screen displays
     $("#result").text(`Correct! The answer was ${questionArray[questionNumber].correctAnswer}.`);
     score++;
     onQuestion = false;
     afterQuestion();
-}
+};
 
-function playerIncorrect(){
+function playerIncorrect() {
     //If the player is incorrect, the result screen
     $("#result").text(`Incorrect. The answer was ${questionArray[questionNumber].correctAnswer}.`);
     onQuestion = false;
     afterQuestion();
-}
+};
 
 function afterQuestion(){
     totalTime = 10;
+    updateImage();
     togglePage();
     //Checks if they are on the last question and updates the result div accordingly
     if (questionNumber < (questionArray.length - 1)){
@@ -146,7 +159,9 @@ function playerAnswered() {
     };
 };
 
-updatePage(questionNumber);
+//Hides the result at the beginning of the webpage so the start displays correctly.
+$("#result").hide();
+updatePage();
 startTimer();
 
 // If time runs out, the page changes to incorrect
