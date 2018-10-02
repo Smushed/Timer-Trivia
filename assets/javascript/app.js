@@ -163,5 +163,3 @@ function playerAnswered() {
 $("#result").hide();
 updatePage();
 startTimer();
-
-// If time runs out, the page changes to incorrect
